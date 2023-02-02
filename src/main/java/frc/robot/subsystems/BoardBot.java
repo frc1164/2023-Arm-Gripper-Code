@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import frc.robot.Constants;
 import frc.robot.Constants.BoardConstants;
 
 
@@ -24,6 +23,30 @@ public class BoardBot extends SubsystemBase {
 
     NormalMotor = new CANSparkMax (BoardConstants.kNormalMotor, MotorType.kBrushless);
     NormalEncoder = NormalMotor.getEncoder();
+  }
+
+
+  public void setNormalSpd(double spd) {
+    NormalMotor.set(spd);
+  }
+  public void setStickerSpd(double spd) {
+    StickerMotor.set(spd);
+  }
+
+  
+  public double getStickerSpd(){
+    return StickerEncoder.getVelocity();
+  }
+  public double getNormalSpd(){
+    return NormalEncoder.getVelocity();
+  }
+ 
+ 
+  public double getStickerRevolutions(){
+    return StickerEncoder.getPosition();
+  }
+  public double getNormalRevolutions(){
+    return NormalEncoder.getPosition();
   }
 
   @Override
