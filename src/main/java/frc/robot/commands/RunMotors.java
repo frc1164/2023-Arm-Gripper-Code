@@ -14,6 +14,7 @@ import frc.robot.Constants;
 
 /** An example command that uses an example subsystem. */
 public class RunMotors extends CommandBase {
+  
   private final BoardBot BoardBot;
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   
@@ -31,7 +32,9 @@ public class RunMotors extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
