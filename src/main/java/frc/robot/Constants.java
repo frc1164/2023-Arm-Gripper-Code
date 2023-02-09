@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.XboxController;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -17,7 +19,8 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
  public static class BoardConstants {
-    public static final int kStickerMotor = 10;
-    public static final int kNormalMotor = 20;
+    public static final int StickerMotor = 10;
+    public static final int NormalMotor = 20;
+    public final XboxController m_controller = new XboxController(0);
  } 
 }
