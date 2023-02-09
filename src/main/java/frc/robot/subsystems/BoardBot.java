@@ -9,44 +9,36 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants.BoardConstants;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 
 public class BoardBot extends SubsystemBase {
-  private final CANSparkMax StickerMotor;
-  private final CANSparkMax NormalMotor;
+  private final CANSparkMax m_rightDrive;
+  private final CANSparkMax m_leftDrive;
+
   private final RelativeEncoder StickerEncoder;
   private final RelativeEncoder NormalEncoder;
+
+  private final DigitalInput toplimitSwitch;
+  private final DigitalInput bottomlimitSwitch;
+  private final DigitalInput MechSwitch;
+
+
   /** Creates a new BoardBot. */
   public BoardBot() {
-    StickerMotor = new CANSparkMax(BoardConstants.kStickerMotor, MotorType.kBrushless);
-    StickerEncoder = StickerMotor.getEncoder();
+    m_rightDrive = new CANSparkMax(BoardConstants.StickerMotor, MotorType.kBrushless);
+    m_leftDrive = new CANSparkMax(BoardConstants.NormalMotor, MotorType.kBrushless);
 
-    NormalMotor = new CANSparkMax (BoardConstants.kNormalMotor, MotorType.kBrushless);
-    NormalEncoder = NormalMotor.getEncoder();
-  }
+    StickerEncoder = m_rightDrive.getEncoder();
+    NormalEncoder = m_leftDrive.getEncoder();
 
-
-  public void setNormalSpd(double spd) {
-    NormalMotor.set(spd);
-  }
-  public void setStickerSpd(double spd) {
-    StickerMotor.set(spd);
+    toplimitSwitch = new DigitalInput(2);
+    bottomlimitSwitch = new DigitalInput(1);
+    MechSwitch = new DigitalInput (0);
   }
 
   
-  public double getStickerSpd(){
-    return StickerEncoder.getVelocity();
-  }
-  public double getNormalSpd(){
-    return NormalEncoder.getVelocity();
-  }
- 
- 
-  public double getStickerRevolutions(){
-    return StickerEncoder.getPosition();
-  }
-  public double getNormalRevolutions(){
-    return NormalEncoder.getPosition();
+
   }
 
   @Override
