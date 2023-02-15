@@ -4,9 +4,9 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.BoardBot;
+import frc.robot.subsystems.Gripper;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.BoardBot;
+import frc.robot.subsystems.Gripper;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType; 
@@ -15,7 +15,7 @@ import frc.robot.Constants;
 /** An example command that uses an example subsystem. */
 public class RunMotors extends CommandBase {
   
-  private final BoardBot BoardBot;
+  private final Gripper Gripper;
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   
 
@@ -24,8 +24,8 @@ public class RunMotors extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public RunMotors(BoardBot subsystem) {
-    BoardBot = subsystem;
+  public RunMotors(Gripper subsystem) {
+    Gripper = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -33,7 +33,6 @@ public class RunMotors extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
   }
 
   // Called every time the scheduler runs while the command is scheduled.

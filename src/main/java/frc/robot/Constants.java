@@ -21,7 +21,7 @@ public final class Constants {
  public static class BoardConstants {
     public static final int StickerMotor = 10;
     public static final int NormalMotor = 20;
-    public static final int GripperMotor = 53;
+    public static final int GripperMotor = 60;
     public final XboxController m_controller = new XboxController(0);
  } 
 }
