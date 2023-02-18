@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import frc.robot.Constants.BoardConstants;
+import frc.robot.Constants.GripperC;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 
 
 public class Gripper extends SubsystemBase {
   private final CANSparkMax rightDrive;
-  public final CANSparkMax leftDrive;
+  private final CANSparkMax leftDrive;
   private final CANSparkMax Gripper;
 
   private final RelativeEncoder StickerEncoder;
@@ -28,9 +28,9 @@ public class Gripper extends SubsystemBase {
 
   /** Creates a new Gripper. */
   public Gripper() {
-    rightDrive = new CANSparkMax(BoardConstants.StickerMotor, MotorType.kBrushless);
-    leftDrive = new CANSparkMax(BoardConstants.NormalMotor, MotorType.kBrushless);
-    Gripper = new CANSparkMax(BoardConstants.GripperMotor, MotorType.kBrushless);
+    rightDrive = new CANSparkMax(GripperC.StickerMotor, MotorType.kBrushless);
+    leftDrive = new CANSparkMax(GripperC.NormalMotor, MotorType.kBrushless);
+    Gripper = new CANSparkMax(GripperC.GripperMotor, MotorType.kBrushless);
 
    // m_controller = new XboxController(0);
 
@@ -69,8 +69,8 @@ public void Intake(double speed) {
 }
   
     
-  public void initreverseRight(){
-    rightDrive.setInverted(true);
+  public void initreverseLeft(){
+    leftDrive.setInverted(true);
   }
 
  
