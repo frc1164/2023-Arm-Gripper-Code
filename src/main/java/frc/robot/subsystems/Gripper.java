@@ -16,13 +16,13 @@ import edu.wpi.first.wpilibj.XboxController;
 public class Gripper extends SubsystemBase {
   private final CANSparkMax rightDrive;
   private final CANSparkMax leftDrive;
-  private final CANSparkMax Gripper;
+  private final CANSparkMax clasp;
 
   private final RelativeEncoder StickerEncoder;
   private final RelativeEncoder NormalEncoder;
 
-  private final DigitalInput toplimitSwitch;
-  private final DigitalInput bottomlimitSwitch;
+  private final DigitalInput openlimitSwitch;
+  private final DigitalInput closedlimitSwitch;
   private final DigitalInput MechSwitch;
 
 
@@ -30,15 +30,15 @@ public class Gripper extends SubsystemBase {
   public Gripper() {
     rightDrive = new CANSparkMax(GripperC.StickerMotor, MotorType.kBrushless);
     leftDrive = new CANSparkMax(GripperC.NormalMotor, MotorType.kBrushless);
-    Gripper = new CANSparkMax(GripperC.GripperMotor, MotorType.kBrushless);
+    clasp = new CANSparkMax(GripperC.GripperMotor, MotorType.kBrushless);
 
    // m_controller = new XboxController(0);
 
     StickerEncoder = rightDrive.getEncoder();
     NormalEncoder = leftDrive.getEncoder();
 
-    toplimitSwitch = new DigitalInput(2);
-    bottomlimitSwitch = new DigitalInput(1);
+    openlimitSwitch = new DigitalInput(2);
+    closedlimitSwitch = new DigitalInput(1);
     MechSwitch = new DigitalInput (0);
   }
 
@@ -63,11 +63,30 @@ public class Gripper extends SubsystemBase {
     return NormalEncoder.getVelocity();
   }
 
-public void Intake(double speed) {
-  rightDrive.set(speed);
-  leftDrive.set (speed);
-}
+  public void Intake(double speed) {
+    rightDrive.set(speed);
+    leftDrive.set (speed);
+  }
   
+  public void clasp(double speed) {
+    if (speed < 0) {
+        if (!closedlimitSwitch.get()) {
+            // We are going up and top limit is tripped so stop
+            clasp.set(0);
+        } else {
+            // We are going up but top limit is not tripped so go at commanded speed
+            clasp.set(speed);
+        }
+    } else {
+        if (!openlimitSwitch.get()) {
+            // We are going down and bottom limit is tripped so stop
+            clasp.set(0);
+        } else {
+            // We are going down but bottom limit is not tripped so go at commanded speed
+            clasp.set(speed);  
+        }
+       }
+}
     
   public void initreverseLeft(){
     leftDrive.setInverted(true);

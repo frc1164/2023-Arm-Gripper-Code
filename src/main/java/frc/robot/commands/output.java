@@ -5,22 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Subsystem;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants.GripperC;
 import frc.robot.subsystems.Gripper;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.XboxController;
 
-
-public class intake extends CommandBase {
+public class output extends CommandBase {
   private final Gripper m_subsystem;
-
-  /** Creates a new Intake. */
-  public intake(Gripper subsystem) {
+  /** Creates a new output. */
+  public output(Gripper subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -35,7 +26,7 @@ public class intake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.Intake(.5);
+    m_subsystem.Intake(-.25);
   }
 
   // Called once the command ends or is interrupted.
@@ -46,6 +37,5 @@ public class intake extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
-    //m_subsystem.intakeLimit(true);
   }
 }
