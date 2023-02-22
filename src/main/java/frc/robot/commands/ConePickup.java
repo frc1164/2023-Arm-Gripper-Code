@@ -8,24 +8,24 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.GripperC;
 import frc.robot.subsystems.Gripper;
 
-public class output extends CommandBase {
+public class ConePickup extends CommandBase {
   private final Gripper m_subsystem;
-  /** Creates a new output. */
-  public output(Gripper subsystem) {
+  /** Creates a new ConePickup. */
+  public ConePickup(Gripper subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //m_subsystem.coneAngle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.Intake(-.25);
+    m_subsystem.Intake(1);
   }
 
   // Called once the command ends or is interrupted.

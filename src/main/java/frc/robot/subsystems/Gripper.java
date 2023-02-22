@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.XboxController;
 
 public class Gripper extends SubsystemBase {
   private final CANSparkMax rightDrive;
-  private final CANSparkMax leftDrive;
+  private static CANSparkMax leftDrive;
   private final CANSparkMax clasp;
 
   private final RelativeEncoder StickerEncoder;
@@ -88,7 +88,7 @@ public class Gripper extends SubsystemBase {
        }
 }
     
-  public void initreverseLeft(){
+  public static void initreverseLeft(){
     leftDrive.setInverted(true);
   }
 

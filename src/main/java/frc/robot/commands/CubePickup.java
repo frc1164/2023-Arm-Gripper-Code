@@ -5,13 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.GripperC;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.Gripper;
+import frc.robot.Constants.GripperC;
 
-public class output extends CommandBase {
+public class CubePickup extends CommandBase {
   private final Gripper m_subsystem;
-  /** Creates a new output. */
-  public output(Gripper subsystem) {
+  /** Creates a new CubePickup. */
+  public CubePickup(Gripper subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -20,12 +21,13 @@ public class output extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //m_subsystem.cubeAngle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.Intake(-.25);
+    m_subsystem.Intake(.5);
   }
 
   // Called once the command ends or is interrupted.
