@@ -12,6 +12,11 @@ import frc.robot.Constants.GripperC;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 
+import com.ctre.phoenix.CANifier;
+import com.ctre.phoenix.CANifier.GeneralPin;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.sensors.*;
+
 
 public class Gripper extends SubsystemBase {
   private final CANSparkMax rightDrive;
@@ -23,7 +28,11 @@ public class Gripper extends SubsystemBase {
 
   private final DigitalInput openlimitSwitch;
   private final DigitalInput closedlimitSwitch;
-  private final DigitalInput MechSwitch;
+  private static DigitalInput pieceSwitch;
+
+  private static CANifier m_canifier;
+  private final GeneralPin m_openSwitch;
+  private final GeneralPin m_closedSwitch;
 
 
   /** Creates a new Gripper. */
@@ -32,14 +41,17 @@ public class Gripper extends SubsystemBase {
     leftDrive = new CANSparkMax(GripperC.NormalMotor, MotorType.kBrushless);
     clasp = new CANSparkMax(GripperC.GripperMotor, MotorType.kBrushless);
 
-   // m_controller = new XboxController(0);
+    m_canifier = new CANifier(64);
+    m_openSwitch = new GeneralPin(8);
+    m_closedSwitch = new 
+
 
     StickerEncoder = rightDrive.getEncoder();
     NormalEncoder = leftDrive.getEncoder();
 
     openlimitSwitch = new DigitalInput(2);
     closedlimitSwitch = new DigitalInput(1);
-    MechSwitch = new DigitalInput (0);
+    pieceSwitch = new DigitalInput (0);
   }
 
   public void resetEncoders() {
@@ -64,8 +76,14 @@ public class Gripper extends SubsystemBase {
   }
 
   public void Intake(double speed) {
-    rightDrive.set(speed);
-    leftDrive.set (speed);
+    if (speed > 0)
+        if(rightDrive.getOutputCurrent() > 6){
+          rightDrive.set(0);
+          leftDrive.set(0);
+        } else {
+          rightDrive.set(speed);
+          leftDrive.set(speed);
+        }
   }
   
   public void clasp(double speed) {
@@ -91,8 +109,6 @@ public class Gripper extends SubsystemBase {
   public static void initreverseLeft(){
     leftDrive.setInverted(true);
   }
-
- 
 
   @Override
   public void periodic() {

@@ -5,6 +5,8 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ConePickup;
+import frc.robot.commands.CubePickup;
 import frc.robot.commands.intake;
 import frc.robot.commands.output;
 import frc.robot.Constants.GripperC;
@@ -17,18 +19,17 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.xboxButtons;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
+
 public class RobotContainer {
 
   private final intake m_intake;
-  private final Gripper m_gripper;
   private final output m_output;
-  // The robot's subsystems and commands are defined here...
+  private final CubePickup m_cubePickup;
+  private final ConePickup m_conePickup;
+
+  private final Gripper m_gripper;
+
+
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private static final XboxController m_controller = new XboxController(1);
@@ -39,9 +40,16 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
     m_gripper = new Gripper();
+
+
+
     m_intake = new intake(m_gripper);
     m_output = new output(m_gripper);
+    m_cubePickup = new CubePickup(m_gripper);
+    m_conePickup = new ConePickup(m_gripper);
+
     // Configure the trigger bindings
     configureBindings();
   }
@@ -66,6 +74,8 @@ public class RobotContainer {
    // m_controller.x().whileTrue(BoardBot.setintakeInward());
    new JoystickButton(m_controller, xboxButtons.X_BUTTON).whileTrue(m_intake);
    new JoystickButton(m_controller, xboxButtons.Y_BUTTON).whileTrue(m_output);
+   new JoystickButton(m_controller, xboxButtons.A_BUTTON).whileTrue(m_cubePickup);
+   new JoystickButton(m_controller, xboxButtons.B_BUTTON).whileTrue(m_conePickup);
 
     
   }

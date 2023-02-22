@@ -45,6 +45,5 @@ public class intake extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
-    //m_subsystem.intakeLimit(true);
   }
 }
