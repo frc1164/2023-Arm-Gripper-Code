@@ -11,10 +11,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants.GripperC;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.CANifier.GeneralPin;
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.CANifier.PinValues;
 import com.ctre.phoenix.sensors.*;
 
 
@@ -23,31 +24,34 @@ public class Gripper extends SubsystemBase {
   private static CANSparkMax leftDrive;
   private final CANSparkMax clasp;
 
-  private final RelativeEncoder StickerEncoder;
-  private final RelativeEncoder NormalEncoder;
+  private final RelativeEncoder rightEncoder;
+  private final RelativeEncoder leftEncoder;
+  private final RelativeEncoder claspEncoder;
 
   private final DigitalInput openlimitSwitch;
   private final DigitalInput closedlimitSwitch;
   private static DigitalInput pieceSwitch;
 
   private static CANifier m_canifier;
-  private final GeneralPin m_openSwitch;
-  private final GeneralPin m_closedSwitch;
+  private boolean m_openSwitch;
+  private boolean m_closedSwitch;
 
 
   /** Creates a new Gripper. */
   public Gripper() {
-    rightDrive = new CANSparkMax(GripperC.StickerMotor, MotorType.kBrushless);
-    leftDrive = new CANSparkMax(GripperC.NormalMotor, MotorType.kBrushless);
+    rightDrive = new CANSparkMax(GripperC.rightMotor, MotorType.kBrushless);
+    leftDrive = new CANSparkMax(GripperC.leftMotor, MotorType.kBrushless);
     clasp = new CANSparkMax(GripperC.GripperMotor, MotorType.kBrushless);
 
     m_canifier = new CANifier(64);
-    m_openSwitch = new GeneralPin(8);
-    m_closedSwitch = new 
+
+    m_openSwitch = m_canifier.getGeneralInput(GeneralPin.LIMF);
+    m_closedSwitch = m_canifier.getGeneralInput(GeneralPin.LIMR);
 
 
-    StickerEncoder = rightDrive.getEncoder();
-    NormalEncoder = leftDrive.getEncoder();
+    rightEncoder = rightDrive.getEncoder();
+    leftEncoder = leftDrive.getEncoder();
+    claspEncoder = clasp.getEncoder();
 
     openlimitSwitch = new DigitalInput(2);
     closedlimitSwitch = new DigitalInput(1);
@@ -55,24 +59,24 @@ public class Gripper extends SubsystemBase {
   }
 
   public void resetEncoders() {
-    StickerEncoder.setPosition(0);
-    NormalEncoder.setPosition(0);
+    rightEncoder.setPosition(0);
+    leftEncoder.setPosition(0);
   }
   
-  public double getStickerPosition() {
-    return StickerEncoder.getPosition();
+  public double getrightPosition() {
+    return rightEncoder.getPosition();
   }
   
-  public double getNormalPosition() {
-    return NormalEncoder.getPosition();
+  public double getleftPosition() {
+    return leftEncoder.getPosition();
   }
   
-  public double getStickerVelocity() {
-    return StickerEncoder.getVelocity();
+  public double getrightVelocity() {
+    return rightEncoder.getVelocity();
   }
   
-  public double getNormalVelocity() {
-    return NormalEncoder.getVelocity();
+  public double getleftVelocity() {
+    return leftEncoder.getVelocity();
   }
 
   public void Intake(double speed) {
@@ -110,9 +114,42 @@ public class Gripper extends SubsystemBase {
     leftDrive.setInverted(true);
   }
 
+
+  public void setgripEncoder() {
+    while (!m_openSwitch && !m_closedSwitch);
+      clasp.set(-.25);
+    clasp.set(0);
+    claspEncoder.setPosition(0);
+  }
+
+  public void gripToggle() {
+    if (m_openSwitch){
+      clasp.set(.25);
+      
+      while (!m_closedSwitch){
+      }
+
+      clasp.set(0);
+
+    }
+    if(m_closedSwitch){
+      clasp.set(-.25);
+
+      while(!m_openSwitch){
+      }
+      
+      clasp.set(0);
+    }else{
+      clasp.set(-.25);
+    }
+
+  }
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Gripper Encoder", claspEncoder.getPosition());
     
   }
 }
