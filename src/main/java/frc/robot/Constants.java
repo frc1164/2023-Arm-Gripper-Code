@@ -21,8 +21,8 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
  public static class GripperC {
-    public static final int StickerMotor = 10;
-    public static final int NormalMotor = 20;
+    public static final int rightMotor = 10;
+    public static final int leftMotor = 20;
     public static final int GripperMotor = 60;
     public static final DigitalOutput m_intakeswitch = new DigitalOutput(9);
     public static final DigitalOutput m_topgripSwitch = new DigitalOutput(8);

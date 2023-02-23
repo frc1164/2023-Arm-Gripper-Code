@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Gripper;
 import frc.robot.Constants.GripperC;
 
@@ -18,6 +19,8 @@ import frc.robot.Constants.GripperC;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+
+  private final Gripper m_Gripper = new Gripper();
 
   private RobotContainer m_robotContainer;
 
@@ -59,6 +62,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    new InstantCommand(()  ->  m_Gripper.setgripEncoder());
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();

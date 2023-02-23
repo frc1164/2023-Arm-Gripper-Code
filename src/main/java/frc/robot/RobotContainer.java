@@ -25,7 +25,7 @@ public class RobotContainer {
   private final intake m_intake;
   private final output m_output;
   private final CubePickup m_cubePickup;
-  private final ConePickup m_conePickup;
+  private final ConePickup m_conePickup; 
 
   private final Gripper m_gripper;
 
