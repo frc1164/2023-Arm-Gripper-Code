@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants.GripperC;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -40,10 +41,12 @@ public class Gripper extends SubsystemBase {
   /** Creates a new Gripper. */
   public Gripper() {
     rightDrive = new CANSparkMax(GripperC.rightMotor, MotorType.kBrushless);
+    rightDrive.setInverted(GripperC.rightMotorReversed);
     leftDrive = new CANSparkMax(GripperC.leftMotor, MotorType.kBrushless);
+    leftDrive.setInverted(GripperC.leftMotorReversed);
     clasp = new CANSparkMax(GripperC.GripperMotor, MotorType.kBrushless);
 
-    m_canifier = new CANifier(64);
+    m_canifier = new CANifier(59);
 
     m_openSwitch = m_canifier.getGeneralInput(GeneralPin.LIMF);
     m_closedSwitch = m_canifier.getGeneralInput(GeneralPin.LIMR);
@@ -80,19 +83,19 @@ public class Gripper extends SubsystemBase {
   }
 
   public void Intake(double speed) {
-    if (speed > 0)
+   /*  if (speed > 0)
         if(rightDrive.getOutputCurrent() > 6){
           rightDrive.set(0);
           leftDrive.set(0);
-        } else {
+        } else {*/
           rightDrive.set(speed);
           leftDrive.set(speed);
         }
-  }
+  
   
   public void clasp(double speed) {
-    if (speed < 0) {
-        if (!closedlimitSwitch.get()) {
+    if (speed > 0) {
+        if (closedlimitSwitch.get()) {
             // We are going up and top limit is tripped so stop
             clasp.set(0);
         } else {
@@ -100,7 +103,7 @@ public class Gripper extends SubsystemBase {
             clasp.set(speed);
         }
     } else {
-        if (!openlimitSwitch.get()) {
+        if (openlimitSwitch.get()) {
             // We are going down and bottom limit is tripped so stop
             clasp.set(0);
         } else {
@@ -144,6 +147,12 @@ public class Gripper extends SubsystemBase {
     }
 
   }
+
+
+
+  /*public void setgripAngle(setpoint) {
+    new PIDController(closed number, setpoint, 0)
+  }*/
 
 
   @Override

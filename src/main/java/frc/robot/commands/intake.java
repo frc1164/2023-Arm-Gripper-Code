@@ -23,7 +23,6 @@ public class intake extends CommandBase {
   public intake(Gripper subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -40,7 +39,7 @@ public class intake extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    m_subsystem.Intake(0);
   }
 
   // Returns true when the command should end.

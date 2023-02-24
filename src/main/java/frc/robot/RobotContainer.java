@@ -5,12 +5,12 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Clasp;
 import frc.robot.commands.ConePickup;
 import frc.robot.commands.CubePickup;
 import frc.robot.commands.intake;
 import frc.robot.commands.output;
 import frc.robot.Constants.GripperC;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Gripper;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,17 +26,16 @@ public class RobotContainer {
   private final output m_output;
   private final CubePickup m_cubePickup;
   private final ConePickup m_conePickup; 
+  private final Clasp m_gripManual;
 
   private final Gripper m_gripper;
 
 
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
   private static final XboxController m_controller = new XboxController(1);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+ // private final CommandXboxController m_driverController =
+      //new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -49,6 +48,7 @@ public class RobotContainer {
     m_output = new output(m_gripper);
     m_cubePickup = new CubePickup(m_gripper);
     m_conePickup = new ConePickup(m_gripper);
+    m_gripManual = new Clasp(m_gripper);
 
     // Configure the trigger bindings
     configureBindings();
@@ -70,12 +70,12 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
    // m_controller.x().whileTrue(BoardBot.setintakeInward());
    new JoystickButton(m_controller, xboxButtons.X_BUTTON).whileTrue(m_intake);
-   new JoystickButton(m_controller, xboxButtons.Y_BUTTON).whileTrue(m_output);
-   new JoystickButton(m_controller, xboxButtons.A_BUTTON).whileTrue(m_cubePickup);
-   new JoystickButton(m_controller, xboxButtons.B_BUTTON).whileTrue(m_conePickup);
+   new JoystickButton(m_controller, xboxButtons.Y_BUTTON).onTrue(m_output);
+   new JoystickButton(m_controller, xboxButtons.A_BUTTON).onTrue(m_cubePickup);
+   new JoystickButton(m_controller, xboxButtons.B_BUTTON).onTrue(m_conePickup);
+   new JoystickButton(m_controller, (int) m_controller.getRawAxis(5)).whileTrue(m_gripManual);
 
     
   }

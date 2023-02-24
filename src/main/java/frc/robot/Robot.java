@@ -20,7 +20,7 @@ import frc.robot.Constants.GripperC;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private final Gripper m_Gripper = new Gripper();
+  //private final Gripper m_Gripper = new Gripper();
 
   private RobotContainer m_robotContainer;
 
@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    Gripper.initreverseLeft();
+   // Gripper.initreverseLeft();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    new InstantCommand(()  ->  m_Gripper.setgripEncoder());
+   // new InstantCommand(()  ->  m_Gripper.setgripEncoder());
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
