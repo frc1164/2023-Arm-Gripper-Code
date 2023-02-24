@@ -34,8 +34,6 @@ public class Gripper extends SubsystemBase {
   private static DigitalInput pieceSwitch;
 
   private static CANifier m_canifier;
-  private boolean m_openSwitch;
-  private boolean m_closedSwitch;
 
 
   /** Creates a new Gripper. */
@@ -46,11 +44,7 @@ public class Gripper extends SubsystemBase {
     leftDrive.setInverted(GripperC.leftMotorReversed);
     clasp = new CANSparkMax(GripperC.GripperMotor, MotorType.kBrushless);
 
-    m_canifier = new CANifier(59);
-
-    m_openSwitch = m_canifier.getGeneralInput(GeneralPin.LIMF);
-    m_closedSwitch = m_canifier.getGeneralInput(GeneralPin.LIMR);
-
+    m_canifier = new CANifier(GripperC.GripperCANifier);
 
     rightEncoder = rightDrive.getEncoder();
     leftEncoder = leftDrive.getEncoder();
@@ -148,7 +142,12 @@ public class Gripper extends SubsystemBase {
 
   }
 
-
+public boolean getGripperForwardLimitSwitch() {
+    return m_canifier.getGeneralInput(GeneralPin.LIMF);
+}
+public boolean getGripperRearLimitSwitch() {
+    return m_canifier.getGeneralInput(GeneralPin.LIMR);
+}
 
   /*public void setgripAngle(setpoint) {
     new PIDController(closed number, setpoint, 0)

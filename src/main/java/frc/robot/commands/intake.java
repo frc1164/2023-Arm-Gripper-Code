@@ -18,16 +18,19 @@ import edu.wpi.first.wpilibj.XboxController;
 
 public class intake extends CommandBase {
   private final Gripper m_subsystem;
+  private final XboxController m_controller;
 
   /** Creates a new Intake. */
-  public intake(Gripper subsystem) {
+  public intake(Gripper subsystem, XboxController controller) {
     m_subsystem = subsystem;
+    m_controller = controller;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_subsystem.Intake(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,6 +48,6 @@ public class intake extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return !m_controller.getXButton();
   }
 }

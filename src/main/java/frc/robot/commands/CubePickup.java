@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -13,9 +14,12 @@ import frc.robot.Constants.xboxButtons;
 
 public class CubePickup extends CommandBase {
   private final Gripper m_subsystem;
+  private final XboxController m_controller;
+
   /** Creates a new CubePickup. */
-  public CubePickup(Gripper subsystem) {
+  public CubePickup(Gripper subsystem, XboxController controller) {
     m_subsystem = subsystem;
+    m_controller = controller;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -30,7 +34,7 @@ public class CubePickup extends CommandBase {
   @Override
   public void execute() {
     m_subsystem.Intake(.25);
-    SmartDashboard.putBoolean("A_BUTTON", xboxButtons.m_controller.getAButton());
+    SmartDashboard.putBoolean("A_BUTTON", m_controller.getAButton());
   }
 
   // Called once the command ends or is interrupted.
@@ -42,6 +46,6 @@ public class CubePickup extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !xboxButtons.m_controller.getAButton();
+    return !m_controller.getAButton();
   }
 }

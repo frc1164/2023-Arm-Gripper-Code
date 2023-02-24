@@ -18,18 +18,18 @@ import edu.wpi.first.wpilibj.XboxController.Axis;
  */
 public final class Constants {
   public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
+    public static final int kOperatorControllerPort = 1;
   }
  public static class GripperC {
     public static final int rightMotor = 62;
     public static final int leftMotor = 61;
     public static final int GripperMotor = 60;
+    public static final int GripperCANifier = 59;
     public static boolean leftMotorReversed = true;
     public static boolean rightMotorReversed = false;
  } 
 
  public static class xboxButtons {
-   public static final XboxController m_controller = new XboxController(0);
     public static final int A_BUTTON = 0;
     public static final int B_BUTTON = 1;
     public static final int X_BUTTON = 2;

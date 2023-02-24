@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.GripperC;
 import frc.robot.Constants.xboxButtons;
@@ -11,9 +12,12 @@ import frc.robot.subsystems.Gripper;
 
 public class Clasp extends CommandBase {
   private final Gripper m_subsystem;
+  private final XboxController m_controller;
+
   /** Creates a new Clasp. */
-  public Clasp(Gripper subsystem) {
+  public Clasp(Gripper subsystem, XboxController controller) {
     m_subsystem = subsystem;
+    m_controller = controller;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -26,7 +30,7 @@ public class Clasp extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.clasp(xboxButtons.m_controller.getRawAxis(5)/4);
+    m_subsystem.clasp(m_controller.getRawAxis(5)/4);
 
   }
 
