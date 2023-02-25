@@ -14,11 +14,10 @@ import frc.robot.Constants.GripperC;
 import frc.robot.subsystems.Gripper;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.xboxButtons;
-
 
 public class RobotContainer {
 
@@ -34,6 +33,8 @@ public class RobotContainer {
 
     m_gripper = new Gripper();
     m_controller = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
+
+    
 
 
 
@@ -70,11 +71,14 @@ Trigger aButton = m_controller.a();
 Trigger bButton = m_controller.b();
 Trigger yButton = m_controller.y();
 Trigger xButton = m_controller.x();
+Trigger lBumper = m_controller.leftBumper();
+Trigger rBumper = m_controller.rightBumper();
 
 aButton.whileTrue(new CubePickup(m_gripper));
 bButton.whileTrue(new ConePickup(m_gripper));
 yButton.whileTrue(new intake (m_gripper));
 xButton.whileTrue(new output (m_gripper));
+rBumper.onTrue(new InstantCommand(() -> Gripper.gripToggle()));
 
  //  new JoystickButton(m_controller, xboxButtons.B_BUTTON).onTrue(new ConePickup(m_gripper, m_controller));
    // new JoystickButton(m_controller, (int) m_controller.getRawAxis(5)).whileTrue(m_gripManual);

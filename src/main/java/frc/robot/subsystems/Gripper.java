@@ -21,16 +21,16 @@ import com.ctre.phoenix.sensors.*;
 
 
 public class Gripper extends SubsystemBase {
-  private final CANSparkMax rightDrive;
+  private static CANSparkMax rightDrive;
   private static CANSparkMax leftDrive;
-  private final CANSparkMax clasp;
+  private static CANSparkMax clasp;
 
-  private final RelativeEncoder rightEncoder;
-  private final RelativeEncoder leftEncoder;
-  private final RelativeEncoder claspEncoder;
+  private static RelativeEncoder rightEncoder;
+  private static RelativeEncoder leftEncoder;
+  private static RelativeEncoder claspEncoder;
 
-  private final DigitalInput openlimitSwitch;
-  private final DigitalInput closedlimitSwitch;
+  private static DigitalInput openlimitSwitch;
+  private static DigitalInput closedlimitSwitch;
   private static DigitalInput pieceSwitch;
 
   private static CANifier m_canifier;
@@ -47,10 +47,6 @@ public class Gripper extends SubsystemBase {
     clasp = new CANSparkMax(GripperC.GripperMotor, MotorType.kBrushless);
 
     m_canifier = new CANifier(GripperC.GripperCANifier);
-
-  /* Note: These actually don't do anything. Replace references with calls to getGripperForwardLimitSwitch() and getGripperRearLimitSwitch() */
-  m_openSwitch = m_canifier.getGeneralInput(GeneralPin.LIMF);
-  m_closedSwitch = m_canifier.getGeneralInput(GeneralPin.LIMR);
 
     rightEncoder = rightDrive.getEncoder();
     leftEncoder = leftDrive.getEncoder();
@@ -93,9 +89,9 @@ public class Gripper extends SubsystemBase {
         }
   
   
-  public void clasp(double speed) {
+  public void setClasp(double speed) {
     if (speed > 0) {
-        if (closedlimitSwitch.get()) {
+        if (getGripperOPENLimitSwitch()) {
             // We are going up and top limit is tripped so stop
             clasp.set(0);
         } else {
@@ -103,7 +99,7 @@ public class Gripper extends SubsystemBase {
             clasp.set(speed);
         }
     } else {
-        if (openlimitSwitch.get()) {
+        if (getGripperCLSDLimitSwitch()) {
             // We are going down and bottom limit is tripped so stop
             clasp.set(0);
         } else {
@@ -125,20 +121,20 @@ public class Gripper extends SubsystemBase {
     claspEncoder.setPosition(0);
   }
 
-  public void gripToggle() {
-    if (m_openSwitch){
+  public static void gripToggle() {
+    if (getGripperCLSDLimitSwitch()){
       clasp.set(.25);
       
-      while (!m_closedSwitch){
+      while (getGripperOPENLimitSwitch()){
       }
 
       clasp.set(0);
 
     }
-    if(m_closedSwitch){
+    if(getGripperOPENLimitSwitch()){
       clasp.set(-.25);
 
-      while(!m_openSwitch){
+      while(getGripperOPENLimitSwitch()){
       }
       
       clasp.set(0);
@@ -148,10 +144,10 @@ public class Gripper extends SubsystemBase {
 
   }
 
-public boolean getGripperForwardLimitSwitch() {
+public static boolean getGripperCLSDLimitSwitch() {
     return m_canifier.getGeneralInput(GeneralPin.LIMF);
 }
-public boolean getGripperRearLimitSwitch() {
+public static boolean getGripperOPENLimitSwitch() {
     return m_canifier.getGeneralInput(GeneralPin.LIMR);
 }
 
@@ -164,8 +160,8 @@ public boolean getGripperRearLimitSwitch() {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Gripper Encoder", claspEncoder.getPosition());
-    SmartDashboard.putBoolean("Forward Limit Switch", getGripperForwardLimitSwitch());
-    SmartDashboard.putBoolean("Rear Limit Switch", getGripperRearLimitSwitch());
+    SmartDashboard.putBoolean("Forward Limit Switch", getGripperCLSDLimitSwitch());
+    SmartDashboard.putBoolean("Rear Limit Switch", getGripperOPENLimitSwitch());
     
   }
 }
