@@ -13,12 +13,11 @@ import frc.robot.subsystems.Gripper;
 
 public class output extends CommandBase {
   private final Gripper m_subsystem;
-  private final XboxController m_controller;
 
   /** Creates a new output. */
-  public output(Gripper subsystem, XboxController controller) {
+  public output(Gripper subsystem) {
     m_subsystem = subsystem;
-    m_controller = controller;
+    
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -42,7 +41,7 @@ public class output extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !m_controller.getYButton();
+    return false;
 
   }
 }

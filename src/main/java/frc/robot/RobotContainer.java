@@ -23,7 +23,7 @@ import frc.robot.Constants.xboxButtons;
 public class RobotContainer {
 
   private final Gripper m_gripper;
-  private final XboxController m_controller;
+  private final CommandXboxController m_controller;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
  // private final CommandXboxController m_driverController =
@@ -33,7 +33,7 @@ public class RobotContainer {
   public RobotContainer() {
 
     m_gripper = new Gripper();
-    m_controller = new XboxController(OperatorConstants.kOperatorControllerPort);
+    m_controller = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
 
 
@@ -64,10 +64,19 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
    // m_controller.x().whileTrue(BoardBot.setintakeInward());
-   new JoystickButton(m_controller, xboxButtons.X_BUTTON).onTrue(new intake(m_gripper, m_controller));
-   new JoystickButton(m_controller, xboxButtons.Y_BUTTON).onTrue(new output(m_gripper, m_controller));
-   new JoystickButton(m_controller, xboxButtons.A_BUTTON).onTrue(new CubePickup(m_gripper, m_controller));
-   new JoystickButton(m_controller, xboxButtons.B_BUTTON).onTrue(new ConePickup(m_gripper, m_controller));
+// new JoystickButton(m_controller, xboxButtons.X_BUTTON).onTrue(new intake(m_gripper, m_controller));
+//   new JoystickButton(m_controller, xboxButtons.Y_BUTTON).onTrue(new output(m_gripper, m_controller));
+Trigger aButton = m_controller.a();
+Trigger bButton = m_controller.b();
+Trigger yButton = m_controller.y();
+Trigger xButton = m_controller.x();
+
+aButton.whileTrue(new CubePickup(m_gripper));
+bButton.whileTrue(new ConePickup(m_gripper));
+yButton.whileTrue(new intake (m_gripper));
+xButton.whileTrue(new output (m_gripper));
+
+ //  new JoystickButton(m_controller, xboxButtons.B_BUTTON).onTrue(new ConePickup(m_gripper, m_controller));
    // new JoystickButton(m_controller, (int) m_controller.getRawAxis(5)).whileTrue(m_gripManual);
 
     

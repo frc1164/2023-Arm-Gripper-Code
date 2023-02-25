@@ -13,17 +13,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants.GripperC;
 import frc.robot.subsystems.Gripper;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.XboxController;
 
 
 public class intake extends CommandBase {
   private final Gripper m_subsystem;
-  private final XboxController m_controller;
 
   /** Creates a new Intake. */
-  public intake(Gripper subsystem, XboxController controller) {
+  public intake(Gripper subsystem) {
     m_subsystem = subsystem;
-    m_controller = controller;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -48,6 +45,6 @@ public class intake extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !m_controller.getXButton();
+    return false;
   }
 }

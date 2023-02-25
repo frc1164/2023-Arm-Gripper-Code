@@ -30,7 +30,7 @@ public final class Constants {
  } 
 
  public static class xboxButtons {
-    public static final int A_BUTTON = 0;
+    /* public static final int A_BUTTON = 0; */
     public static final int B_BUTTON = 1;
     public static final int X_BUTTON = 2;
     public static final int Y_BUTTON = 3;

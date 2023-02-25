@@ -34,6 +34,8 @@ public class Gripper extends SubsystemBase {
   private static DigitalInput pieceSwitch;
 
   private static CANifier m_canifier;
+  private boolean m_openSwitch;
+  private boolean m_closedSwitch;
 
 
   /** Creates a new Gripper. */
@@ -45,6 +47,10 @@ public class Gripper extends SubsystemBase {
     clasp = new CANSparkMax(GripperC.GripperMotor, MotorType.kBrushless);
 
     m_canifier = new CANifier(GripperC.GripperCANifier);
+
+  /* Note: These actually don't do anything. Replace references with calls to getGripperForwardLimitSwitch() and getGripperRearLimitSwitch() */
+  m_openSwitch = m_canifier.getGeneralInput(GeneralPin.LIMF);
+  m_closedSwitch = m_canifier.getGeneralInput(GeneralPin.LIMR);
 
     rightEncoder = rightDrive.getEncoder();
     leftEncoder = leftDrive.getEncoder();
@@ -158,6 +164,8 @@ public boolean getGripperRearLimitSwitch() {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Gripper Encoder", claspEncoder.getPosition());
+    SmartDashboard.putBoolean("Forward Limit Switch", getGripperForwardLimitSwitch());
+    SmartDashboard.putBoolean("Rear Limit Switch", getGripperRearLimitSwitch());
     
   }
 }
