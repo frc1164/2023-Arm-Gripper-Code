@@ -26,25 +26,27 @@ public class CubePickup extends CommandBase {
   @Override
   public void initialize() {
     m_subsystem.Intake(0);
-    //m_subsystem.cubeAngle();
+    m_subsystem.setgripPID(-5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.Intake(.25);
-   // SmartDashboard.putBoolean("Y_BUTTON", m_controller.getYButton());
+    m_subsystem.runGripPID(m_subsystem.gripPosition());
   }
+   // SmartDashboard.putBoolean("Y_BUTTON", m_controller.getYButton());
+  
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.Intake(0);
+    m_subsystem.setClasp(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+   // return m_subsystem.gripPID.atSetpoint();
     return false;
   }
 }

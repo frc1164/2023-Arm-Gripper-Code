@@ -23,13 +23,15 @@ public class ConePickup extends CommandBase {
   @Override
   public void initialize() {
     //m_subsystem.coneAngle();
+    m_subsystem.setgripPID(-59);
     m_subsystem.Intake(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.Intake(.5);
+    m_subsystem.runGripPID(m_subsystem.gripPosition());
+   // m_subsystem.Intake(.5);
   }
 
   // Called once the command ends or is interrupted.
