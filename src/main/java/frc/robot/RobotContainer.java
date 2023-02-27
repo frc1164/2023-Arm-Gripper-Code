@@ -35,7 +35,7 @@ public class RobotContainer {
     m_controller = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
     
-
+    m_gripper.setDefaultCommand(new Clasp(m_gripper, m_controller));
 
 
     /* m_intake = new intake(m_gripper);
@@ -67,6 +67,9 @@ public class RobotContainer {
    // m_controller.x().whileTrue(BoardBot.setintakeInward());
 // new JoystickButton(m_controller, xboxButtons.X_BUTTON).onTrue(new intake(m_gripper, m_controller));
 //   new JoystickButton(m_controller, xboxButtons.Y_BUTTON).onTrue(new output(m_gripper, m_controller));
+
+
+
 Trigger aButton = m_controller.a();
 Trigger bButton = m_controller.b();
 Trigger yButton = m_controller.y();
@@ -74,11 +77,11 @@ Trigger xButton = m_controller.x();
 Trigger lBumper = m_controller.leftBumper();
 Trigger rBumper = m_controller.rightBumper();
 
-aButton.whileTrue(new CubePickup(m_gripper));
-bButton.whileTrue(new ConePickup(m_gripper));
+lBumper.whileTrue(new CubePickup(m_gripper));
+rBumper.whileTrue(new ConePickup(m_gripper));
 yButton.whileTrue(new intake (m_gripper));
 xButton.whileTrue(new output (m_gripper));
-rBumper.onTrue(new InstantCommand(() -> Gripper.gripToggle()));
+bButton.onTrue(new InstantCommand(() -> Gripper.gripToggle()));
 
  //  new JoystickButton(m_controller, xboxButtons.B_BUTTON).onTrue(new ConePickup(m_gripper, m_controller));
    // new JoystickButton(m_controller, (int) m_controller.getRawAxis(5)).whileTrue(m_gripManual);
