@@ -25,8 +25,8 @@ public final class Constants {
     public static final int leftMotor = 61;
     public static final int GripperMotor = 60;
     public static final int GripperCANifier = 59;
-    public static boolean leftMotorReversed = true;
-    public static boolean rightMotorReversed = false;
+    public static boolean leftMotorReversed = false;
+    public static boolean rightMotorReversed = true;
  } 
 
 }

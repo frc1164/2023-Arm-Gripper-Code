@@ -79,8 +79,8 @@ Trigger rBumper = m_controller.rightBumper();
 
 lBumper.whileTrue(new CubePickup(m_gripper));
 rBumper.whileTrue(new ConePickup(m_gripper));
-yButton.whileTrue(new intake (m_gripper));
-xButton.whileTrue(new output (m_gripper));
+xButton.whileTrue(new intake (m_gripper));
+aButton.whileTrue(new output (m_gripper));
 bButton.onTrue(new InstantCommand(() -> Gripper.gripToggle()));
 
  //  new JoystickButton(m_controller, xboxButtons.B_BUTTON).onTrue(new ConePickup(m_gripper, m_controller));
